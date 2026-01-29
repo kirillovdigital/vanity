@@ -23,6 +23,14 @@ To start using Vanity, simply visit [vanity.ac](http://vanity.ac). Our web inter
 
 ---
 
+## Development
+
+- **Install**: `bun install`
+- **Dev**: `bun run dev`
+- **Build**: `bun run build`
+
+---
+
 ### Contributing to the Project
 
 I am welcome any suggestions and participation in the project! If you have ideas or want to help in development, please do not hesitate to make changes or reach out to me.

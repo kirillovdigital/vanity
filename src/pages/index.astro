@@ -1,0 +1,21 @@
+---
+import App from "../components/App";
+import { SITE } from "../lib/constants";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{SITE.TITLE}</title>
+    <meta name="description" content={SITE.DESCRIPTION} />
+    <meta property="og:title" content={SITE.TITLE} />
+    <meta property="og:description" content={SITE.DESCRIPTION} />
+    <meta property="og:image" content={SITE.OG_IMAGE} />
+  </head>
+  <body>
+    <App client:load />
+  </body>
+</html>
