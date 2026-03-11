@@ -29,7 +29,6 @@ import {
 } from "../lib/format";
 import {
   estimateSearchSpace,
-  getFixedPrefix,
   normalizeSearchInput,
   sanitizeSearchInput,
   validatePatternInput,
@@ -88,7 +87,6 @@ export function VanityWorkbench() {
   const controllerRef = useRef<{ stop: () => void } | null>(null);
 
   const network = getNetworkDefinition(chainId);
-  const fixedPrefix = getFixedPrefix(chainId, bitcoinAddressType);
   const searchSpace = estimateSearchSpace(
     chainId,
     prefix,
@@ -510,35 +508,6 @@ export function VanityWorkbench() {
                 }
               />
             </div>
-
-            <div className="form-row form-row--secondary">
-              <div className="readonly-field">
-                <span className="readonly-field__label">FIXED PREFIX</span>
-                <span className="readonly-field__value">
-                  {fixedPrefix || "NONE"}
-                </span>
-              </div>
-              <input
-                className="input input--compact"
-                type="number"
-                min={32}
-                max={8192}
-                value={batchSize}
-                disabled={isRunning}
-                onChange={(event) =>
-                  setBatchSize(Math.max(32, Number(event.target.value) || 32))
-                }
-              />
-            </div>
-            <p className="helper-text">
-              {network.searchTarget === "body-after-prefix"
-                ? `Matching starts after the fixed ${fixedPrefix} prefix.`
-                : network.prefixHint}
-            </p>
-            <p className="helper-text">
-              Unsupported characters are removed automatically for the active
-              network.
-            </p>
 
             <div className="settings-row">
               <div className="thread-control">
