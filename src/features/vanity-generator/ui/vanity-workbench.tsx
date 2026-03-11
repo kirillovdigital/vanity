@@ -31,6 +31,7 @@ import {
   estimateSearchSpace,
   getFixedPrefix,
   normalizeSearchInput,
+  sanitizeSearchInput,
   validatePatternInput,
 } from "../lib/validation";
 import type {
@@ -54,6 +55,9 @@ const EMPTY_METRICS: SearchMetrics = {
   elapsedMs: 0,
 };
 
+const IDLE_STATUS_MESSAGE =
+  "Generator is idle. Choose a network and define a prefix or suffix.";
+
 export function VanityWorkbench() {
   const [chainId, setChainId] =
     useState<(typeof NETWORK_LIST)[number]["id"]>("evm");
@@ -68,9 +72,7 @@ export function VanityWorkbench() {
   );
   const [checksumMode, setChecksumMode] = useState(false);
   const [status, setStatus] = useState<GeneratorStatus>("idle");
-  const [statusMessage, setStatusMessage] = useState(
-    "Generator is idle. Choose a network and define a prefix or suffix.",
-  );
+  const [statusMessage, setStatusMessage] = useState(IDLE_STATUS_MESSAGE);
   const [metrics, setMetrics] = useState<SearchMetrics>(EMPTY_METRICS);
   const [results, setResults] = useState<VanityResult[]>([]);
   const [activeResultId, setActiveResultId] = useState<string | null>(null);
@@ -118,6 +120,44 @@ export function VanityWorkbench() {
     };
   }, []);
 
+  useEffect(() => {
+    const nextPrefix = sanitizeSearchInput(chainId, prefix, bitcoinAddressType);
+    const nextSuffix = sanitizeSearchInput(chainId, suffix, bitcoinAddressType);
+
+    if (nextPrefix !== prefix) {
+      setPrefix(nextPrefix);
+    }
+
+    if (nextSuffix !== suffix) {
+      setSuffix(nextSuffix);
+    }
+
+    if (!nextPrefix && !nextSuffix) {
+      setValidationError(null);
+
+      if (status === "error") {
+        setStatus("idle");
+        setStatusMessage(IDLE_STATUS_MESSAGE);
+      }
+
+      return;
+    }
+
+    const nextError = validatePatternInput(
+      chainId,
+      nextPrefix,
+      nextSuffix,
+      bitcoinAddressType,
+    );
+
+    setValidationError(nextError);
+
+    if (status === "error" && !nextError) {
+      setStatus("idle");
+      setStatusMessage(IDLE_STATUS_MESSAGE);
+    }
+  }, [bitcoinAddressType, chainId, prefix, status, suffix]);
+
   async function handleCopy(text: string, label: string) {
     await copyText(text);
     setNotice(`${label} copied.`);
@@ -143,6 +183,51 @@ export function VanityWorkbench() {
     controllerRef.current = null;
     setStatus(nextStatus);
     setStatusMessage(message);
+  }
+
+  function syncPatternValidation(nextPrefix: string, nextSuffix: string) {
+    if (!nextPrefix && !nextSuffix) {
+      setValidationError(null);
+
+      if (status === "error") {
+        setStatus("idle");
+        setStatusMessage(IDLE_STATUS_MESSAGE);
+      }
+
+      return;
+    }
+
+    const nextError = validatePatternInput(
+      chainId,
+      nextPrefix,
+      nextSuffix,
+      bitcoinAddressType,
+    );
+
+    setValidationError(nextError);
+
+    if (status === "error" && !nextError) {
+      setStatus("idle");
+      setStatusMessage(IDLE_STATUS_MESSAGE);
+    }
+  }
+
+  function handlePatternChange(field: "prefix" | "suffix", value: string) {
+    const sanitizedValue = sanitizeSearchInput(
+      chainId,
+      value,
+      bitcoinAddressType,
+    );
+    const nextPrefix = field === "prefix" ? sanitizedValue : prefix;
+    const nextSuffix = field === "suffix" ? sanitizedValue : suffix;
+
+    if (field === "prefix") {
+      setPrefix(sanitizedValue);
+    } else {
+      setSuffix(sanitizedValue);
+    }
+
+    syncPatternValidation(nextPrefix, nextSuffix);
   }
 
   function handleStart() {
@@ -405,14 +490,24 @@ export function VanityWorkbench() {
                 placeholder={network.placeholderPrefix.toUpperCase()}
                 value={prefix}
                 disabled={isRunning}
-                onChange={(event) => setPrefix(event.target.value)}
+                spellCheck={false}
+                autoCapitalize="off"
+                autoCorrect="off"
+                onChange={(event) =>
+                  handlePatternChange("prefix", event.target.value)
+                }
               />
               <input
                 className="input"
                 placeholder={network.placeholderSuffix.toUpperCase()}
                 value={suffix}
                 disabled={isRunning}
-                onChange={(event) => setSuffix(event.target.value)}
+                spellCheck={false}
+                autoCapitalize="off"
+                autoCorrect="off"
+                onChange={(event) =>
+                  handlePatternChange("suffix", event.target.value)
+                }
               />
             </div>
 
@@ -439,6 +534,10 @@ export function VanityWorkbench() {
               {network.searchTarget === "body-after-prefix"
                 ? `Matching starts after the fixed ${fixedPrefix} prefix.`
                 : network.prefixHint}
+            </p>
+            <p className="helper-text">
+              Unsupported characters are removed automatically for the active
+              network.
             </p>
 
             <div className="settings-row">

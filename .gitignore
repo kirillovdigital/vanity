@@ -16,7 +16,6 @@
 # astro
 /.astro/
 /dist/
-/src/generated/wasm/
 
 # production
 /build

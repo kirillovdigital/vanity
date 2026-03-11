@@ -13,6 +13,7 @@
       "!**/node_modules",
       "!**/.astro",
       "!**/dist",
+      "!src/generated/wasm",
       "!**/bun.lock",
       "!**/*.astro",
       "!**/*.otf",

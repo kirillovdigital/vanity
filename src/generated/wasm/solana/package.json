@@ -1,0 +1,16 @@
+{
+  "name": "vanity-solana",
+  "type": "module",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "index_bg.wasm",
+    "index.js",
+    "index.d.ts"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
