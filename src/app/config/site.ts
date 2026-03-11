@@ -1,6 +1,6 @@
 export const SITE = {
   name: "Vanity",
-  url: "https://vanity.ac",
+  url: "https://vanity.kirillov.digital",
   title: "Vanity | Multichain vanity generator",
   description:
     "Generate vanity addresses for EVM, Solana, Bitcoin, TON, and Polkadot directly in the browser with dedicated workers.",

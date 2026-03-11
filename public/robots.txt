@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vanity.ac/sitemap-index.xml
+Sitemap: https://vanity.kirillov.digital/sitemap-index.xml

@@ -4,7 +4,7 @@ import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
   output: "static",
-  site: "https://vanity.ac",
+  site: "https://vanity.kirillov.digital",
   integrations: [react(), sitemap()],
   fonts: [
     {
