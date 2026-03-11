@@ -1,25 +1,32 @@
 # Vanity
 
-![Vanity Image](https://github.com/LaitmanX/vanity/blob/main/public/images/vanity.png)
+![Vanity preview](./public/images/vanity.png)
 
-Vanity is a simple and effective tool for generating "vanity" (beautiful) addresses in Ethereum and other blockchain networks. It is designed for those who want to have a unique and memorable address.
+Vanity is a browser-based multichain vanity address generator. It searches locally with dedicated Web Workers, keeps fresh results in session memory by default, and saves wallets to an encrypted IndexedDB vault only when you explicitly ask it to.
 
 ## Introduction
 
-Vanity allows users to easily create personalized addresses by adding recognizable words or sequences of characters. It is the perfect tool for those looking to make their blockchain address stand out from the rest.
+Vanity helps you generate recognizable prefixes and suffixes without sending keys to a backend. The current app supports:
+
+- EVM
+- Solana
+- Bitcoin (`Taproot` and `Native SegWit`)
+- TON
+- Polkadot
 
 ## How to Use
 
 ### Accessing Vanity
 
-To start using Vanity, simply visit [vanity.ac](http://vanity.ac). Our web interface allows you to effortlessly generate beautiful addresses without requiring any special technical knowledge.
+To start using Vanity, visit [vanity.ac](https://vanity.ac).
 
 ## Features
 
-- **Ease of Use**: An intuitive interface that makes the address generation process easy and accessible.
-- **Support for Multiple Networks**: Generates addresses for Ethereum and other popular blockchain networks.
-- **Personalization**: The ability to create addresses that contain words or symbols of your choice.
-- **Fast and Efficient**: Instant address generation without delays.
+- **Local generation**: Wallet search runs in the browser through dedicated workers.
+- **Multichain runtime**: EVM shares one engine, while Solana, Bitcoin, TON, and Polkadot each use their own family-specific worker.
+- **Explicit vault**: Session results are ephemeral until you save them into the IndexedDB vault encrypted with PBKDF2 + AES-GCM.
+- **Lazy wallet center**: Reown AppKit is kept out of the critical route path and loads only when wallet context is needed.
+- **Cloudflare-ready headers**: `_headers` enables cross-origin isolation and immutable caching for worker and wasm-friendly assets.
 
 ---
 
@@ -27,7 +34,14 @@ To start using Vanity, simply visit [vanity.ac](http://vanity.ac). Our web inter
 
 - **Install**: `bun install`
 - **Dev**: `bun run dev`
+- **Lint**: `bun run lint`
+- **Check**: `bun run check`
 - **Build**: `bun run build`
+
+### Environment
+
+- `PUBLIC_REOWN_PROJECT_ID` optional override for the AppKit project id
+- `PUBLIC_WALLETCONNECT_PROJECT_ID` fallback override
 
 ---
 
@@ -39,7 +53,7 @@ I am welcome any suggestions and participation in the project! If you have ideas
 
 ### Feedback and Support
 
-If you have questions, suggestions, or need support using Vanity, please contact me at [dim@laitman.co](mailto:dim@laitman.co).
+If you have questions, suggestions, or need support using Vanity, please contact me at [dim@kirillov.digital](mailto:dim@kirillov.digital).
 
 ---
 

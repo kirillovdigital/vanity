@@ -1,7 +1,15 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@entities/*": ["src/entities/*"],
+      "@features/*": ["src/features/*"],
+      "@shared/*": ["src/shared/*"]
+    }
   },
-  "include": ["src", "astro.config.mjs"]
+  "include": ["src", "astro.config.mjs"],
+  "exclude": ["src/generated/wasm/**/*.js"]
 }

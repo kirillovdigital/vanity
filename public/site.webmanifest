@@ -1,0 +1,28 @@
+{
+  "name": "Vanity",
+  "short_name": "Vanity",
+  "description": "Multichain vanity address generator for EVM, Solana, Bitcoin, TON and Polkadot.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#050404",
+  "theme_color": "#050404",
+  "categories": ["developer", "utilities", "finance"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

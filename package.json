@@ -1,29 +1,46 @@
 {
   "name": "vanity",
   "version": "0.1.0",
-  "author": "laitman <dim@laitman.co>",
+  "author": "kirillovdigital <dim@kirillov.digital>",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "dev": "bun run wasm:dev && bunx astro dev",
+    "build": "bun run wasm:build && bunx astro build",
+    "preview": "bunx astro preview",
+    "check": "bun run wasm:build && bunx astro check",
+    "lint": "bunx biome lint --write --unsafe && bunx biome check --write --unsafe",
+    "wasm:build": "node ./scripts/build-wasm.mjs",
+    "wasm:dev": "node ./scripts/build-wasm.mjs --dev",
+    "rust:test": "cargo test --manifest-path rust/Cargo.toml"
   },
   "dependencies": {
-    "@astrojs/react": "4.4.2",
-    "@rainbow-me/rainbowkit": "2.2.10",
-    "@tanstack/react-query": "5.90.20",
-    "astro": "6.0.0-beta.4",
-    "crypto-js": "4.2.0",
+    "@astrojs/react": "5.0.0",
+    "@astrojs/sitemap": "3.7.1",
+    "@reown/appkit": "1.8.19",
+    "@reown/appkit-adapter-bitcoin": "1.8.19",
+    "@reown/appkit-adapter-solana": "1.8.19",
+    "@reown/appkit-adapter-ton": "1.8.19",
+    "@reown/appkit-adapter-wagmi": "1.8.19",
+    "@reown/appkit-common": "1.8.19",
+    "@wagmi/core": "^3.4.0",
+    "astro": "6.0.2",
+    "idb-keyval": "^6.2.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "viem": "2.45.0",
+    "viem": "2.47.1",
     "wagmi": "2.19.5"
   },
   "devDependencies": {
-    "@types/node": "25.0.10",
-    "@types/react": "19.2.10",
+    "@astrojs/check": "0.9.7",
+    "@biomejs/biome": "2.4.6",
+    "@types/node": "25.4.0",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "4.72.0"
   }
 }

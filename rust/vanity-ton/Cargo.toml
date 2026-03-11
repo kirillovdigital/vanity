@@ -1,0 +1,14 @@
+[package]
+name = "vanity-ton"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+ed25519-dalek.workspace = true
+ton-contracts.workspace = true
+vanity-common.workspace = true
+wasm-bindgen.workspace = true

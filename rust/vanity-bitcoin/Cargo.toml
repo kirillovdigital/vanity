@@ -1,0 +1,17 @@
+[package]
+name = "vanity-bitcoin"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+bech32.workspace = true
+bs58.workspace = true
+k256.workspace = true
+ripemd.workspace = true
+sha2.workspace = true
+vanity-common.workspace = true
+wasm-bindgen.workspace = true

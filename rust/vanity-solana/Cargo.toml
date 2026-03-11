@@ -1,0 +1,14 @@
+[package]
+name = "vanity-solana"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+bs58.workspace = true
+ed25519-dalek.workspace = true
+vanity-common.workspace = true
+wasm-bindgen.workspace = true

@@ -1,0 +1,11 @@
+[package]
+name = "vanity-common"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+getrandom.workspace = true
+serde.workspace = true
+serde-wasm-bindgen.workspace = true
+wasm-bindgen.workspace = true
