@@ -16,16 +16,38 @@ type EngineCallbacks = {
   onError: (message: string) => void;
 };
 
-const WORKERS: Record<ChainFamily, () => URL> = {
-  evm: () => new URL("../workers/evm.worker.ts", import.meta.url),
-  solana: () => new URL("../workers/solana.worker.ts", import.meta.url),
-  bitcoin: () => new URL("../workers/bitcoin.worker.ts", import.meta.url),
-  ton: () => new URL("../workers/ton.worker.ts", import.meta.url),
-  substrate: () => new URL("../workers/substrate.worker.ts", import.meta.url),
-};
-
 function createWorker(family: ChainFamily) {
-  return new Worker(WORKERS[family](), { type: "module" });
+  switch (family) {
+    case "evm":
+      return new Worker(new URL("../workers/evm.worker.ts", import.meta.url), {
+        type: "module",
+      });
+    case "solana":
+      return new Worker(
+        new URL("../workers/solana.worker.ts", import.meta.url),
+        {
+          type: "module",
+        },
+      );
+    case "bitcoin":
+      return new Worker(
+        new URL("../workers/bitcoin.worker.ts", import.meta.url),
+        {
+          type: "module",
+        },
+      );
+    case "ton":
+      return new Worker(new URL("../workers/ton.worker.ts", import.meta.url), {
+        type: "module",
+      });
+    case "substrate":
+      return new Worker(
+        new URL("../workers/substrate.worker.ts", import.meta.url),
+        {
+          type: "module",
+        },
+      );
+  }
 }
 
 export function runVanityJob(job: VanityJob, callbacks: EngineCallbacks) {
